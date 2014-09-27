@@ -1,5 +1,9 @@
 require 'json'
 
+def copy_source_to_subfolder(file)
+
+end
+
 desc "Copy all bower files to the appropriate _site subfolders"
 task :bower_copy do
     # Grab all the bower components paths
@@ -11,10 +15,19 @@ task :bower_copy do
         /\.js$/ => 'js',
     }
 
+    # Convenience lambda
+    copy_to_subfolder = lambda do |file|
+        FILE_MAP.each { |regex, dir| cp file, "#{dir}" if regex === file }
+    end
+
     # Copy them
-    paths.each do |mod, files|
-        files.each do |file|
-            FILE_MAP.each { |regex, dir| cp file, "#{dir}" if regex === file }
+    paths.each do |mod, path|
+        if path.kind_of? Array
+            path.each do |p|
+                copy_to_subfolder.call p
+            end
+        else
+            copy_to_subfolder.call path
         end
     end
 end
