@@ -2,22 +2,57 @@
 layout: default
 ---
 
-<div class="home">
+<div id="visualization"></div>
+<script>
+  var now = moment().minutes(0).seconds(0).milliseconds(0);
 
-  <h1 class="page-heading">Posts</h1>
+  var data = [];
+  {% for party in site.data.vows.parties %}
+  data.push({
+    name: '{{party.name}}',
+    vows: [
+      {% for vow in party.vows %}{complete: {{vow.complete}}, title: '{{vow.title}}', source: '{{vow.source}}', start: moment('{{vow.start}}') },{% endfor %}
+    ]
+  });
+  {% endfor %}
 
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+  var groups = new vis.DataSet();
+  var items = new vis.DataSet();
+  for (var group_index = 0; group_index < data.length; group_index++) {
+    var party = data[group_index];
+    groups.add({
+      id: group_index,
+      content: party.name,
+    });
 
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
+    for (var vow_index = 0; vow_index < party.vows.length; vow_index++) {
+      var vow = party.vows[vow_index];
+      items.add({
+        // id: i,
+        group: group_index,
+        content: '<a href = "' + vow.source + '" target="vow_source">' + vow.title + '</a>',
+        start: vow.start,
+        type: 'box'
+      });
+    }
+  }
 
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
+  // create visualization
+  var container = document.getElementById('visualization');
+  var options = {
+    groupOrder: 'content',  // groupOrder can be a property name or a sorting function
+    zoomable: false,
+    autoResize: true,
+    stack: false,
+    minHeight: 300,
+    maxHeight: 300,
+    start: moment('2014-09-18'),
+    min: moment('2014-09-18'),
+    max: moment('2016-09-18'),
+  };
 
-</div>
+  var timeline = new vis.Timeline(container);
+  timeline.setOptions(options);
+  timeline.setGroups(groups);
+  timeline.setItems(items);
+</script>

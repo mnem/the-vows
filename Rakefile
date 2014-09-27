@@ -1,8 +1,8 @@
 require 'json'
+require 'rake/clean'
 
-def copy_source_to_subfolder(file)
-
-end
+CLEAN.include '.sass-cache'
+CLOBBER.include '_site'
 
 desc "Copy all bower files to the appropriate _site subfolders"
 task :bower_copy do

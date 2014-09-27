@@ -1,0 +1,11 @@
+---
+layout: post
+title:  "Welcome!"
+date:   2014-09-27 20:34:41
+categories: welcome
+---
+Welcome to The Vows, a site hacked together to show a timeline with the pledges
+the main parties in the UK made in order to keep Scotland within the Union.
+
+This feed will contain updates made to the data used to power the feed. Assuming
+that I remember to update it.

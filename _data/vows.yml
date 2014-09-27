@@ -1,0 +1,25 @@
+parties:
+    - name: All
+      vows:
+        - complete: false
+          title: Foo
+          source: http://foo.com/bar
+          start: 2014-09-19
+    - name: Labour
+      vows:
+        - complete: false
+          title: Foo
+          source: http://foo.com/bar
+          start: 2014-09-19
+    - name: Conservative
+      vows:
+        - complete: false
+          title: Foo
+          source: http://foo.com/bar
+          start: 2014-09-19
+    - name: Liberal Democrats
+      vows:
+        - complete: false
+          title: Foo
+          source: http://foo.com/bar
+          start: 2014-09-19
