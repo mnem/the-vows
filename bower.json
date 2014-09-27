@@ -1,0 +1,19 @@
+{
+  "name": "the-vows",
+  "version": "0.0.0",
+  "description": "Tracking The Vows",
+  "authors": [
+    "David Wagner <mnem@noiseandheat.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "vis": "~3.5.0"
+  }
+}
