@@ -2,8 +2,41 @@
 layout: default
 ---
 
-<div id="visualization"></div>
-<ul id="sources"></ul>
+<div id="visual-timeline">
+  <h1>Visual Timeline</h1>
+  <div id="visualization"></div>
+</div>
+
+<div id="text-timeline">
+  <h1>Text Timeline</h1>
+  <div class="text-timeline-wrapper">
+    {% for group in site.data.vows.groups %}
+    <h2>{{group.name}}</h2>
+    <ul>
+        {% for item in group.items %}
+        <li>
+        <span class="date">
+          {% if item.end %}
+          {{ item.start | date: "%-d %B %Y" }} - {{ item.end | date: "%-d %B %Y" }}
+          {% else %}
+          {{ item.start | date: "%-d %B %Y" }}
+          {% endif %}
+          :
+        </span>
+        {% if item.complete %}✓&nbsp;{% endif %}{{item.title}}
+        {% for source in item.sources %}<sup><a href="{{source}}" title="{{source}}" target="vow_source"></a></sup>&nbsp;{% endfor %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endfor %}
+  </div>
+</div>
+
+<div id="references">
+  <h1>References</h1>
+  <ul id="sources"></ul>
+</div>
+
 <script>
   var sources = {id: {}, list: []};
 
@@ -14,9 +47,9 @@ layout: default
     var data = [];
     {% for group in site.data.vows.groups %}
     data.push({
-      name: '{{group.name}}',
+      name: "{{group.name}}",
       items: [
-        {% for item in group.items %}{complete: {{item.complete}}, title: '{{item.title}}', sources: [{% for source in item.sources %}'{{source}}', {% endfor %}], start: '{{item.start}}', end: '{{item.end}}' },{% endfor %}
+        {% for item in group.items %}{complete: {{item.complete}}, title: "{{item.title}}", sources: [{% for source in item.sources %}"{{source}}", {% endfor %}], start: "{{item.start}}", end: "{{item.end}}" },{% endfor %}
       ]
     });
     {% endfor %}
@@ -48,7 +81,6 @@ layout: default
         id: group_index,
         content: group.name,
       });
-      console.log("group added", group.name)
 
       // Add all the data items to the group
       for (var item_index = 0; item_index < group.items.length; item_index++) {
@@ -105,12 +137,20 @@ layout: default
     return timeline;
   }
 
+  function fixup_text_sources() {
+    for (var i = 0; i < sources.list.length; i++) {
+      var source = sources.list[i];
+      var source_id = get_source_id(source);
+      $('#text-timeline a[href$="' + source + '"]').text('[' + source_id + ']');
+    }
+  }
+
   function create_sources() {
     var sources_ul = $('#sources');
     for (var i = 0; i < sources.list.length; i++) {
       var source = sources.list[i];
       var source_id = get_source_id(source);
-      sources_ul.append('<li>' + source_id + ': <a href="' + source + '" target="vow_source">' + source + '</a></li>');
+      sources_ul.append('<li>' + source_id + ': <a href="' + source + '" title="' + source + '" target="vow_source">' + source + '</a></li>');
     }
   }
 
@@ -119,6 +159,7 @@ layout: default
     populate_groups_and_items(response, function(response) {
       create_timelines(response.groups, response.items);
       create_sources();
+      fixup_text_sources();
     });
   });
 </script>
