@@ -2,8 +2,8 @@
 title: The Vows
 email: mnem@noiseandheat.com
 description: >
-    Tracker for The Vows offered from the main political
-    parties to keep Scotland in the Union.
+    Tracker for things to do with the new
+    <a href='http://en.wikipedia.org/wiki/Scotland_Act_2012'>Scotland Act</a>.
 baseurl: "/the-vows" # the subpath of your site, e.g. /blog/
 url: "http://the-vows.github.com" # the base hostname & protocol for your site
 twitter_username: kaeladan
