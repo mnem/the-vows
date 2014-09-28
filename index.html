@@ -3,56 +3,124 @@ layout: default
 ---
 
 <div id="visualization"></div>
+<ul id="sources"></ul>
 <script>
-  var now = moment().minutes(0).seconds(0).milliseconds(0);
+  var sources = {id: {}, list: []};
 
-  var data = [];
-  {% for party in site.data.vows.parties %}
-  data.push({
-    name: '{{party.name}}',
-    vows: [
-      {% for vow in party.vows %}{complete: {{vow.complete}}, title: '{{vow.title}}', source: '{{vow.source}}', start: moment('{{vow.start}}') },{% endfor %}
-    ]
-  });
-  {% endfor %}
-
-  var groups = new vis.DataSet();
-  var items = new vis.DataSet();
-  for (var group_index = 0; group_index < data.length; group_index++) {
-    var party = data[group_index];
-    groups.add({
-      id: group_index,
-      content: party.name,
+  function fetch_data(on_complete) {
+    // This all looks terribly verbose, but it's currently statically
+    // generated from a YAML data file. See the source on github
+    // for more details
+    var data = [];
+    {% for group in site.data.vows.groups %}
+    data.push({
+      name: '{{group.name}}',
+      items: [
+        {% for item in group.items %}{complete: {{item.complete}}, title: '{{item.title}}', sources: [{% for source in item.sources %}'{{source}}', {% endfor %}], start: '{{item.start}}', end: '{{item.end}}' },{% endfor %}
+      ]
     });
+    {% endfor %}
 
-    for (var vow_index = 0; vow_index < party.vows.length; vow_index++) {
-      var vow = party.vows[vow_index];
-      items.add({
-        // id: i,
-        group: group_index,
-        content: '<a href = "' + vow.source + '" target="vow_source">' + vow.title + '</a>',
-        start: vow.start,
-        type: 'box'
+    on_complete({error: false, data: data})
+  }
+
+  function get_source_id(source) {
+    var id = sources.id[source];
+    if (id == null) {
+      sources.list.push(source);
+      id = sources.list.length;
+      sources.id[source] = id;
+    }
+
+    return id;
+  }
+
+  function populate_groups_and_items(response, on_complete) {
+    var data = response.data;
+    var vis_groups = new vis.DataSet();
+    var vis_items = new vis.DataSet();
+    var item_id = 1;
+
+    for (var group_index = 0; group_index < data.length; group_index++) {
+      // Create the group for the data items
+      var group = data[group_index];
+      vis_groups.add({
+        id: group_index,
+        content: group.name,
       });
+      console.log("group added", group.name)
+
+      // Add all the data items to the group
+      for (var item_index = 0; item_index < group.items.length; item_index++) {
+        var item = group.items[item_index];
+        var title = item.title + '&nbsp;';
+        if (item.complete) {
+          title = '✓&nbsp;' + title;
+        }
+        for (var source_index = 0; source_index < item.sources.length; source_index++) {
+          var source = item.sources[source_index];
+          var source_id = get_source_id(source);
+          title = title + '<sup>'
+          if (source_index > 0) {
+            title = title + ", ";
+          }
+          title = title + '<a href = "' + source + '" target="vow_source">[' + source_id + ']</a></sup>'
+        };
+        vis_items.add({
+          id: item_id++,
+          group: group_index,
+          content:  title,
+          start: item.start,
+          end: item.end ? moment(item.end) : null,
+          type: item.end ? 'range' : 'point',
+        });
+      }
+    }
+
+    on_complete({error: false, groups: vis_groups, items: vis_items})
+  }
+
+  function create_timelines(groups, items) {
+    var options = {
+      zoomable: true,
+      autoResize: false,
+      selectable: false,
+      stack: true,
+      groupOrder: 'id',
+      minHeight: 600,
+      maxHeight: 600,
+      width: '100%',
+      start: moment(),
+      min: moment('2014-09-18'),
+      max: moment('2016-05-05'),
+      align: 'left',
+      zoomMax: 100000000000,
+      zoomMin: 1000000000,
+    };
+
+    var container = document.getElementById('visualization');
+    var timeline = new vis.Timeline(container);
+    timeline.setOptions(options);
+    timeline.setGroups(groups);
+    timeline.setItems(items);
+
+    return timeline;
+  }
+
+  function create_sources() {
+    var sources_ul = $('#sources');
+    for (var i = 0; i < sources.list.length; i++) {
+      var source = sources.list[i];
+      var source_id = get_source_id(source);
+      sources_ul.append('<li>' + source_id + ': <a href="' + source + '" target="vow_source">' + source + '</a></li>');
     }
   }
 
-  // create visualization
-  var container = document.getElementById('visualization');
-  var options = {
-    groupOrder: 'content',  // groupOrder can be a property name or a sorting function
-    zoomable: false,
-    autoResize: true,
-    stack: false,
-    minHeight: 300,
-    maxHeight: 300,
-    start: moment('2014-09-18'),
-    min: moment('2014-09-18'),
-    max: moment('2016-09-18'),
-  };
-
-  var timeline = new vis.Timeline(container);
-  timeline.setOptions(options);
-  timeline.setGroups(groups);
-  timeline.setItems(items);
+  // Kick it all off
+  fetch_data(function (response) {
+    populate_groups_and_items(response, function(response) {
+      create_timelines(response.groups, response.items);
+      create_sources();
+    });
+  });
 </script>

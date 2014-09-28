@@ -1,25 +1,80 @@
-parties:
-    - name: All
-      vows:
+groups:
+    - name: Smith Commission
+      items:
         - complete: false
-          title: Foo
-          source: http://foo.com/bar
+          title: Consultation on Command Paper
+          sources:
+            - https://www.gov.uk/government/news/scottish-independence-referendum-statement-by-the-prime-minister
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
           start: 2014-09-19
-    - name: Labour
-      vows:
+          end: 2014-10-31
         - complete: false
-          title: Foo
-          source: http://foo.com/bar
-          start: 2014-09-19
-    - name: Conservative
-      vows:
+          title: All Parties Devolution Submissions
+          sources:
+            - http://www.scotsman.com/news/uk/smith-commission-labour-and-tories-close-to-deal-1-3555402
+          start: 2014-10-10
         - complete: false
-          title: Foo
-          source: http://foo.com/bar
-          start: 2014-09-19
+          title: Civic Scotland Submissions
+          sources:
+            - http://www.scotsman.com/news/uk/smith-commission-labour-and-tories-close-to-deal-1-3555402
+          start: 2014-10-31
+        - complete: false
+          title: UK Gov Command Paper
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
+          start: 2014-10-31
+        - complete: false
+          title: Consultation on White Paper
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
+          start: 2014-11-01
+          end: 2014-11-30
+        - complete: false
+          title: UK Gov White Paper
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
+          start: 2014-11-30
+        - complete: false
+          title: Prepare new Scotland Act
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
+          start: 2014-11-30
+          end: 2015-01-25
+        - complete: false
+          title: Draft new Scotland Act
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
+          start: 2015-01-25
+        - complete: false
+          title: Bill in Queen\'s Speech
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899
+          start: 2015-05-05
+    - name: Scottish Greens
+      items:
+        - complete: true
+          title: Greens Announce Nominations for Smith Commission on Devolution
+          sources:
+            - https://www.scottishgreens.org.uk/news/greens-announce-nominations-for-smith-commission-on-devolution/
+          start: 2014-09-27
+    - name: SNP
+      items:
+        - complete: true
+          title: SNP announce members of Smith Commission
+          sources:
+            - http://www.snp.org/media-centre/news/2014/sep/snp-announce-members-smith-commission
+          start: 2014-09-26
     - name: Liberal Democrats
-      vows:
-        - complete: false
-          title: Foo
-          source: http://foo.com/bar
-          start: 2014-09-19
+      items:
+        - complete: true
+          title: Nominations for Smith Commission on Devolution
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29361264
+          start: 2014-09-25
+    - name: Scottish Conservatives
+      items:
+        - complete: true
+          title: Nominations for Smith Commission on Devolution
+          sources:
+            - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29361264
+          start: 2014-09-25
