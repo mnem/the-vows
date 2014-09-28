@@ -4,7 +4,7 @@ layout: default
 
 <div id="visual-timeline">
   <h1>Visual Timeline</h1>
-  <div id="visualization"></div>
+  <div id="visualization">[Requires JavaScript]</div>
 </div>
 
 <div id="text-timeline">
@@ -24,7 +24,7 @@ layout: default
           :
         </span>
         {% if item.complete %}✓&nbsp;{% endif %}{{item.title}}
-        {% for source in item.sources %}<sup><a href="{{source}}" title="{{source}}" target="vow_source"></a></sup>&nbsp;{% endfor %}
+        {% for source in item.sources %}<sup><a href="{{source}}" title="{{source}}" target="vow_source">★</a></sup>&nbsp;{% endfor %}
         </li>
         {% endfor %}
     </ul>
@@ -34,7 +34,7 @@ layout: default
 
 <div id="references">
   <h1>References</h1>
-  <ul id="sources"></ul>
+  <ul id="sources">[Requires JavaScript, embarrassingly, the IDs are generated on the fly.]</ul>
 </div>
 
 <script>
@@ -128,6 +128,7 @@ layout: default
       zoomMin: 1000000000,
     };
 
+    $('#visualization').text('');
     var container = document.getElementById('visualization');
     var timeline = new vis.Timeline(container);
     timeline.setOptions(options);
@@ -147,6 +148,7 @@ layout: default
 
   function create_sources() {
     var sources_ul = $('#sources');
+    sources_ul.text('');
     for (var i = 0; i < sources.list.length; i++) {
       var source = sources.list[i];
       var source_id = get_source_id(source);
