@@ -11,4 +11,4 @@ github_username: mnem
 
 # Build settings
 markdown: kramdown
-exclude: ["bower_components", "Rakefile", "README.md"]
+exclude: ["bower_components", "Rakefile", "README.md", "Gemfile", "Gemfile.lock"]
