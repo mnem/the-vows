@@ -4,7 +4,7 @@ email: mnem@noiseandheat.com
 description: >
     Tracker for The Vows offered from the main political
     parties to keep Scotland in the Union.
-baseurl: "" # the subpath of your site, e.g. /blog/
+baseurl: "/the-vows" # the subpath of your site, e.g. /blog/
 url: "http://the-vows.github.com" # the base hostname & protocol for your site
 twitter_username: kaeladan
 github_username: mnem
