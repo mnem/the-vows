@@ -3,6 +3,7 @@ source "https://rubygems.org"
 
 # gem "rails"
 gem "jekyll"
+gem "deep_merge"
 
 # For easy publishing to github pages
 require 'json'

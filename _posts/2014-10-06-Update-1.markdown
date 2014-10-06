@@ -1,0 +1,8 @@
+---
+layout: post
+title:  "Update 1"
+date:   2014-10-06 15:26:00
+categories: update
+---
+- Add Smith Commission website submissions item.
+- Add banner for Smith Commission website.

@@ -4,6 +4,11 @@ require 'rake/clean'
 CLEAN.include '.sass-cache'
 CLOBBER.include '_site'
 
+desc "Test the site locally"
+task :serve do
+    sh 'jekyll serve --baseurl ""'
+end
+
 desc "Copy all bower files to the appropriate _site subfolders"
 task :bower_copy do
     # Grab all the bower components paths

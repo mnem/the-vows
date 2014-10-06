@@ -19,6 +19,11 @@ groups:
             - http://www.scotsman.com/news/uk/smith-commission-labour-and-tories-close-to-deal-1-3555402
           start: 2014-10-31
         - complete: false
+          title: Smith Comission Website Opens Submissions Form
+          sources:
+            - https://www.smith-commission.scot/news/say-submitting-ideas-views-proposals-commission-03-october-2014/
+          start: 2014-10-13
+        - complete: false
           title: UK Gov Command Paper
           sources:
             - http://www.bbc.co.uk/news/uk-scotland-scotland-politics-29252899

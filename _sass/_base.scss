@@ -202,3 +202,16 @@ pre {
         }
     }
 }
+
+#introduction {
+    font-size: $base-font-size * 1.5;
+    color: #fff;
+    background-color: #000;
+    margin-bottom: 2em;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+#introduction a {
+    color: #75BCEB;
+}
